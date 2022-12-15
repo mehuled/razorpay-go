@@ -1,0 +1,202 @@
+openapi: 3.0.3
+info:
+  title: Razorpay APIs - OpenAPI 3.0
+  description: "Razorpay is an Indian payments solution provider that allows businesses\
+    \ to accept, process and disburse payments with its product suite. "
+  version: 0.0.1
+servers:
+- url: https://api.razorpay.com/v1
+security:
+- basicAuth: []
+tags:
+- name: payments
+  description: Payments APIs
+- name: orders
+  description: Orders APIs
+paths:
+  /orders:
+    post:
+      tags:
+      - orders
+      summary: Create a new Order
+      description: Create a new orders for a Payment
+      requestBody:
+        description: Create a new order for a Payment
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orders_body'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+  /payments:
+    get:
+      tags:
+      - payments
+      summary: Get all payments
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPaymentsResponse'
+components:
+  schemas:
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+          example: order_Krk79GrlWt7KE5
+        entity:
+          type: string
+          example: order
+        amount:
+          type: integer
+          format: int64
+          example: 1000000
+        amount_paid:
+          type: integer
+          format: int64
+          example: 1000000
+        currency:
+          type: string
+          example: INR
+        receipt:
+          type: string
+          example: Receipt No. 1
+        offer_id:
+          type: string
+          example: offer_pqr79GrlWt7KE5
+        status:
+          type: string
+          example: created
+        attempts:
+          type: integer
+          example: 0
+        created_at:
+          type: string
+          format: date-time
+      example:
+        amount: 1000000
+        amount_paid: 1000000
+        created_at: 2000-01-23T04:56:07.000+00:00
+        currency: INR
+        receipt: Receipt No. 1
+        id: order_Krk79GrlWt7KE5
+        entity: order
+        offer_id: offer_pqr79GrlWt7KE5
+        status: created
+        attempts: 0
+    Payment:
+      type: object
+      properties:
+        id:
+          type: string
+          example: pay_Krk79GrlWt7KE5
+        entity:
+          type: string
+          example: payment
+        amount:
+          type: integer
+          format: int64
+          example: 1000000
+        amount_paid:
+          type: integer
+          format: int64
+          example: 1000000
+        currency:
+          type: string
+          example: INR
+        status:
+          type: string
+          example: captured
+        order_id:
+          type: string
+          example: captured
+        receipt:
+          type: string
+          example: Receipt No. 1
+        offer_id:
+          type: string
+          example: offer_pqr79GrlWt7KE5
+        attempts:
+          type: integer
+          example: 0
+        created_at:
+          type: string
+          format: date-time
+      example:
+        amount: 1000000
+        amount_paid: 1000000
+        created_at: 2000-01-23T04:56:07.000+00:00
+        currency: INR
+        receipt: Receipt No. 1
+        id: pay_Krk79GrlWt7KE5
+        order_id: captured
+        entity: payment
+        offer_id: offer_pqr79GrlWt7KE5
+        status: captured
+        attempts: 0
+    GetPaymentsResponse:
+      type: object
+      properties:
+        entity:
+          type: string
+          example: payments
+        count:
+          type: integer
+          example: 10
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+      example:
+        count: 10
+        items:
+        - amount: 1000000
+          amount_paid: 1000000
+          created_at: 2000-01-23T04:56:07.000+00:00
+          currency: INR
+          receipt: Receipt No. 1
+          id: pay_Krk79GrlWt7KE5
+          order_id: captured
+          entity: payment
+          offer_id: offer_pqr79GrlWt7KE5
+          status: captured
+          attempts: 0
+        - amount: 1000000
+          amount_paid: 1000000
+          created_at: 2000-01-23T04:56:07.000+00:00
+          currency: INR
+          receipt: Receipt No. 1
+          id: pay_Krk79GrlWt7KE5
+          order_id: captured
+          entity: payment
+          offer_id: offer_pqr79GrlWt7KE5
+          status: captured
+          attempts: 0
+        entity: payments
+    orders_body:
+      type: object
+      properties:
+        amount:
+          type: integer
+          format: int64
+          example: 10000
+        currency:
+          type: string
+          example: INR
+        receipt:
+          type: string
+          example: Receipt No. 01
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
