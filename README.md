@@ -38,7 +38,7 @@ Class | Method | HTTP request | Description
 
 Example
 ```golang
-auth := context.WithValue(context.Background(), sw.ContextBasicAuth, sw.BasicAuth{
+auth := context.WithValue(context.Background(), razorpay.ContextBasicAuth, razorpay.BasicAuth{
 	UserName: "username",
 	Password: "password",
 })
